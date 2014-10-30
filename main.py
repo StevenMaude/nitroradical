@@ -83,6 +83,7 @@ def iterate_through_index(category):
 
 
 def main():
+    """ Scrape BBC iPlayer web frontend category; create JSON feed. """
     logging.basicConfig(level=logging.INFO)
     dshelpers.install_cache(10000000000)
     iterate_through_index('documentaries')
