@@ -1,0 +1,3 @@
+dshelpers>=1.0.4
+lxml>=3.4.0
+scraperwiki>=0.4.1

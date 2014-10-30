@@ -9,7 +9,6 @@ import sys
 
 import dshelpers
 import lxml.html
-import PyRSS2Gen
 
 
 def get_page_as_element_tree(url):
