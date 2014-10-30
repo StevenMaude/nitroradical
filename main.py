@@ -20,7 +20,8 @@ def get_page_as_element_tree(url):
 def is_last_page(etree):
     """ Return True if current page is final index page, otherwise False. """
     next_disabled = etree.xpath('//span[@class="next disabled txt"]')
-    if next_disabled:
+    next_present = etree.xpath('//span[@class="next txt"]')
+    if next_disabled or not next_present:
         return True
     else:
         return False
