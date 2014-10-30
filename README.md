@@ -26,5 +26,6 @@ e.g. `nitroradical.py films`
 * Getting [BBC Programme Identifiers](https://en.wikipedia.org/wiki/BBC_Programme_Identifier)
 for shows with multiple episodes.
 * Extracting information from flags (e.g. HD, audio described).
+* Radio information.
 * Outputting this information as RSS (if there's interest).
 * Tests!
