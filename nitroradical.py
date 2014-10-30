@@ -100,7 +100,7 @@ def main():
     else:
         print("Usage: nitroradical.py <category name>")
         print("Allowed categories:")
-        print(allowed_categories)
+        print(', '.join(allowed_categories))
 
 if __name__ == '__main__':
     sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
