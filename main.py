@@ -86,7 +86,7 @@ def iterate_through_index(category):
 def main():
     """ Scrape BBC iPlayer web frontend category; create JSON feed. """
     logging.basicConfig(level=logging.INFO)
-    dshelpers.install_cache(10000000000)
+    dshelpers.install_cache(expire_after=30*60)
 
     allowed_categories = ['arts', 'cbbc', 'cbeebies', 'comedy',
                           'documentaries', 'drama-and-soaps', 'entertainment',
