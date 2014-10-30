@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from __future__ import print_function
 
 import codecs
+import json
 import logging
 import sys
 
@@ -86,7 +87,20 @@ def main():
     """ Scrape BBC iPlayer web frontend category; create JSON feed. """
     logging.basicConfig(level=logging.INFO)
     dshelpers.install_cache(10000000000)
-    iterate_through_index('documentaries')
+
+    allowed_categories = ['arts', 'cbbc', 'cbeebies', 'comedy',
+                          'documentaries', 'drama-and-soaps', 'entertainment',
+                          'films', 'food', 'history', 'lifestyle', 'music',
+                          'news', 'science-and-nature', 'sport',
+                          'audio-described', 'signed', 'northern-ireland',
+                          'scotland', 'wales']
+
+    if len(sys.argv) == 2 and sys.argv[1] in allowed_categories:
+        print(json.dumps(iterate_through_index(sys.argv[1]), indent=4))
+    else:
+        print("Usage: nitroradical.py <category name>")
+        print("Allowed categories:")
+        print(allowed_categories)
 
 if __name__ == '__main__':
     sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
