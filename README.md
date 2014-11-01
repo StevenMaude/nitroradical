@@ -1,9 +1,8 @@
 # Nitroradical
 
 Scrape the [BBC iPlayer](http://www.bbc.co.uk/iplayer/) TV listings
-by category and displays the programme info for that category as JSON.
-
-Proof of concept for now.
+by category. It displays the programme info for that category as JSON
+and outputs an RSS feed.
 
 ## Why?
 
@@ -27,5 +26,4 @@ e.g. `nitroradical.py films`
 for shows with multiple episodes.
 * Extracting information from flags (e.g. HD, audio described).
 * Radio information.
-* Outputting this information as RSS (if there's interest).
 * Tests!
