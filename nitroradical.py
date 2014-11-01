@@ -19,6 +19,7 @@ from __future__ import unicode_literals
 from __future__ import print_function
 
 import codecs
+import datetime
 import json
 import logging
 import sys
@@ -27,6 +28,7 @@ from collections import OrderedDict
 
 import dshelpers
 import lxml.html
+import PyRSS2Gen
 
 
 def get_page_as_element_tree(url):
@@ -68,7 +70,17 @@ def extract_programme_data(programme):
     href, = programme.xpath('./a/@href')
     programme_data['url'] = ('http://www.bbc.co.uk' + href)
     programme_data['pid'] = href.split('/')[3]
+    programme_data['last_broadcast'] = get_programme_broadcast_date(
+        programme_data['pid'])
     return programme_data
+
+
+def get_programme_broadcast_date(pid):
+    """ Take URL of programme and return last broadcast date as datetime. """
+    detail_url = 'http://www.bbc.co.uk/programmes/{}'.format(pid)
+    programme_etree = get_page_as_element_tree(detail_url)
+    return programme_etree.xpath(
+        '//div[@class="broadcast-event__time beta"]/@title')[0]
 
 
 def parse_items_from_page(etree):
@@ -98,6 +110,28 @@ def iterate_through_index(category):
     return items
 
 
+def convert_items_to_rss(items):
+    """ Take list of dicts of programmes; return list of RSSItems. """
+    return [PyRSS2Gen.RSSItem(
+            title=item['title'],
+            link=item['url'],
+            description=item['synopsis'],
+            pubDate=datetime.datetime.strptime(item['last_broadcast'],
+                                               '%d %b %Y')) for item in items]
+
+
+def write_rss_feed(category, items):
+    """ Write RSS feed of programmes. """
+    rss_items = convert_items_to_rss(items)
+    rss = PyRSS2Gen.RSS2(
+        title="BBC iPlayer feed for {}".format(category),
+        link="http://www.bbc.co.uk/iplayer",
+        description="BBC iPlayer: {}".format(category),
+        lastBuildDate=datetime.datetime.now(),
+        items=rss_items)
+    rss.write_xml(open("iPlayer_{}.xml".format(category), 'w'), 'utf-8')
+
+
 def main():
     """ Scrape BBC iPlayer web frontend category; create JSON feed. """
     logging.basicConfig(level=logging.INFO)
@@ -111,7 +145,10 @@ def main():
                           'scotland', 'wales']
 
     if len(sys.argv) == 2 and sys.argv[1] in allowed_categories:
-        print(json.dumps(iterate_through_index(sys.argv[1]), indent=4))
+        category = sys.argv[1]
+        items = iterate_through_index(category)
+        print(json.dumps(items, indent=4))
+        write_rss_feed(category, items)
     else:
         print("Usage: nitroradical.py <category name>")
         print("Allowed categories:")
