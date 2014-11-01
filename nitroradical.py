@@ -92,7 +92,7 @@ def iterate_through_index(category):
         logging.info("Downloading page {}".format(page_number))
         etree = get_page_as_element_tree(url)
         parse_items_from_page(etree)
-        items.append(parse_items_from_page(etree))
+        items.extend(parse_items_from_page(etree))
         last_page = is_last_page(etree)
 
     return items
