@@ -70,7 +70,17 @@ def extract_programme_data(programme):
     href, = programme.xpath('./a/@href')
     programme_data['url'] = ('http://www.bbc.co.uk' + href)
     programme_data['pid'] = href.split('/')[3]
+    programme_data['last_broadcast'] = get_programme_broadcast_date(
+        programme_data['pid'])
     return programme_data
+
+
+def get_programme_broadcast_date(pid):
+    """ Take URL of programme and return last broadcast date as datetime. """
+    detail_url = 'http://www.bbc.co.uk/programmes/{}'.format(pid)
+    programme_etree = get_page_as_element_tree(detail_url)
+    return programme_etree.xpath(
+        '//div[@class="broadcast-event__time beta"]/@title')[0]
 
 
 def parse_items_from_page(etree):
@@ -105,7 +115,9 @@ def convert_items_to_rss(items):
     return [PyRSS2Gen.RSSItem(
             title=item['title'],
             link=item['url'],
-            description=item['synopsis']) for item in items]
+            description=item['synopsis'],
+            pubDate=datetime.datetime.strptime(item['last_broadcast'],
+                                               '%d %b %Y')) for item in items]
 
 
 def write_rss_feed(category, items):
