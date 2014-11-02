@@ -76,7 +76,7 @@ def extract_programme_data(programme):
 
 
 def get_programme_broadcast_date(pid):
-    """ Take URL of programme and return last broadcast date as datetime. """
+    """ Take URL of programme and return last broadcast date as string. """
     detail_url = 'http://www.bbc.co.uk/programmes/{}'.format(pid)
     programme_etree = get_page_as_element_tree(detail_url)
     return programme_etree.xpath(
