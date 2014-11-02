@@ -103,7 +103,6 @@ def iterate_through_index(category):
                "/all?sort=atoz&page={}".format(category, page_number))
         logging.info("Downloading page {}".format(page_number))
         etree = get_page_as_element_tree(url)
-        parse_items_from_page(etree)
         items.extend(parse_items_from_page(etree))
         last_page = is_last_page(etree)
 
