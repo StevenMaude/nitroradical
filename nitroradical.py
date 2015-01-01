@@ -70,8 +70,14 @@ def extract_programme_data(programme):
     href, = programme.xpath('./a/@href')
     programme_data['url'] = ('http://www.bbc.co.uk' + href)
     programme_data['pid'] = href.split('/')[3]
-    programme_data['last_broadcast'] = get_programme_broadcast_date(
-        programme_data['pid'])
+
+    try:
+        programme_data['last_broadcast'] = get_programme_broadcast_date(
+            programme_data['pid'])
+    except IndexError:
+        logging.warning('No broadcast date found; defaulting to today.')
+        programme_data['last_broadcast'] = datetime.datetime.now().strftime(
+            '%d %b %Y')
     return programme_data
 
 
