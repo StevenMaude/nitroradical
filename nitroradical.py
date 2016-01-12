@@ -134,7 +134,8 @@ def write_rss_feed(category, items):
         description="BBC iPlayer: {}".format(category),
         lastBuildDate=datetime.datetime.now(),
         items=rss_items)
-    rss.write_xml(open("iPlayer_{}.xml".format(category), 'w'), 'utf-8')
+    with open("iPlayer_{}.xml".format(category), 'w') as f:
+        rss.write_xml(f, 'utf-8')
 
 
 def main():
