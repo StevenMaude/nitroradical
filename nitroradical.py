@@ -67,7 +67,7 @@ def extract_programme_data(programme):
             './/span[@class="release"]')[0].text.strip()
     except IndexError:
         pass
-    href, = programme.xpath('./a/@href')
+    href, = programme.xpath('.//div[@class="list-item-inner"]/a/@href')
     programme_data['url'] = ('http://www.bbc.co.uk' + href)
     programme_data['pid'] = href.split('/')[3]
 
