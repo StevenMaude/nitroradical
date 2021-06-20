@@ -15,10 +15,6 @@
 
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
-from __future__ import unicode_literals
-from __future__ import print_function
-
-import codecs
 import datetime
 import json
 import logging
@@ -161,5 +157,5 @@ def main():
         print(', '.join(allowed_categories))
 
 if __name__ == '__main__':
-    sys.stdout = codecs.getwriter('utf-8')(sys.stdout)
+    sys.stdout.reconfigure(encoding='utf-8')
     main()
