@@ -14,6 +14,8 @@ now :(
 
 Install dependencies using `pip install -r requirements.txt`.
 
+Requires Python 3.7 or greater.
+
 ## Usage
 
 `nitroradical.py <category name>`
@@ -22,8 +24,9 @@ e.g. `nitroradical.py films`
 
 ## Not implemented yet
 
-* Getting [BBC Programme Identifiers](https://en.wikipedia.org/wiki/BBC_Programme_Identifier)
-for shows with multiple episodes.
-* Extracting information from flags (e.g. HD, audio described).
+* Handling multiple programme episodes. For programmes with multiple
+  episodes, only the programme shown in the category listing is
+  included.
+* Getting detailed programme information.
 * Radio information.
 * Tests!
